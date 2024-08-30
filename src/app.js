@@ -1,4 +1,6 @@
-const server = Bun.serve<{ authToken: string }>({
+import { Render,  serveStaticFile, colorLog } from "./render"
+
+const server = Bun.serve({
     fetch(req, server) {
       const success = server.upgrade(req);
       if (success) {
