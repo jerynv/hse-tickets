@@ -1,7 +1,8 @@
 import { Render,  serveStaticFile, colorLog } from "./render"
 
 const server = Bun.serve({
-    fetch(req, server) {
+    async fetch(req, server) {
+      let path = new URL(req.url).pathname;
       const success = server.upgrade(req);
       if (success) {
         // Bun automatically returns a 101 Switching Protocols
@@ -9,8 +10,10 @@ const server = Bun.serve({
         return undefined;
       }
   
-      // handle HTTP request normally
-      return new Response("Hello world!");
+      if (path === "/") {
+        return Render("home");
+      }
+      return await serveStaticFile(path);
     },
     websocket: {
       // this is called when a message is received
