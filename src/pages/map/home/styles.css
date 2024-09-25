@@ -11,6 +11,22 @@ body{
 .head-but{
     color: white;
     display: inline;
+<<<<<<< Updated upstream
+    padding-right: 7vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 25px;
+}
+
+.head-but-login{
+    padding-right: 1vw;
+=======
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 10px;
+>>>>>>> Stashed changes
 }
 
 
@@ -21,7 +37,41 @@ body{
     background-color: #333;
   }
   
-.topnav a:hover {
-    background-color: #ddd;
-    color: blue;
-  }
+.topnav a:hover{
+    border-bottom-color: white;
+    padding-bottom: 5px;
+}
+
+.topnav a{
+    color: white;
+    text-decoration: none;
+    border-bottom: 2px solid transparent;
+    padding-bottom: 0;
+    transition: padding-bottom 0.3s, border-bottom-color 0.3s;
+}
+
+.topnav button{
+    background-color: #333;
+    color: white;
+    border: 3.5px solid white;
+    border-radius: 10px;
+    cursor: pointer;
+    padding: 14px 20px;
+    font-size: 20px;
+    font-family: 'Times New Roman', Times, serif;
+}
+
+.topnav button:hover{
+    background: linear-gradient(to right, #7bb4fe, #135eff);
+}
+
+.intro{
+    color: white;
+    display: flex;
+    flex-direction: column;
+    height: 80vh;
+    background-image: url('https://www.delawareglass.com/wp-content/uploads/2018/12/HSE-1920x916.jpg');
+    background-size:contain;
+    background-position: center;
+    filter: brightness(50%);
+}
