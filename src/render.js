@@ -1,46 +1,42 @@
-const {
-    join
-} = require('path');
-const {
-    file
-} = require('bun');
+const { join } = require("path");
+const { file } = require("bun");
 
 const serveStaticFile = async (path) => {
-    if (path === '/favicon.ico') {
-        return new Response(serveStaticFile('../../components/icon.ico'), {
+    if (path === "/favicon.ico") {
+        return new Response(serveStaticFile("../../components/icon.ico"), {
             headers: {
-                'Content-Type': 'image/x-icon'
-            }
-        })
+                "Content-Type": "image/x-icon",
+            },
+        });
     }
     try {
-        const fp = join(__dirname, 'pages', path);
+        const fp = join(__dirname, "pages", path);
         const fc = await file(fp).text();
-        const ext = path.split('.').pop();
-        let contentType = 'text/plain';
+        const ext = path.split(".").pop();
+        let contentType = "text/plain";
         let addHeaders = {};
         switch (ext) {
-            case 'html':
-                contentType = 'text/html';
+            case "html":
+                contentType = "text/html";
                 break;
-            case 'css':
-                contentType = 'text/css';
+            case "css":
+                contentType = "text/css";
                 break;
-            case 'js':
-                contentType = 'application/javascript';
+            case "js":
+                contentType = "application/javascript";
                 break;
-            case 'json':
-                contentType = 'application/json';
+            case "json":
+                contentType = "application/json";
                 break;
-            case 'png':
-                contentType = 'image/png';
+            case "png":
+                contentType = "image/png";
                 break;
-            case 'ico':
-                contentType = 'image/x-icon';
+            case "ico":
+                contentType = "image/x-icon";
                 break;
-            case 'jpg':
-            case 'jpeg':
-                contentType = 'image/jpeg';
+            case "jpg":
+            case "jpeg":
+                contentType = "image/jpeg";
                 break;
             case "woff":
                 contentType = "font/woff";
@@ -48,17 +44,17 @@ const serveStaticFile = async (path) => {
             case "woff2":
                 //fic incorrect file size for woff2
                 addHeaders = {
-                    'Content-Encoding': 'gzip'
-                }
+                    "Content-Encoding": "gzip",
+                };
                 contentType = "font/woff2";
                 break;
-                // Add more content types as needed
+            // Add more content types as needed
         }
 
         return new Response(fc, {
             headers: {
-                'Content-Type': contentType,
-                ...addHeaders
+                "Content-Type": contentType,
+                ...addHeaders,
             },
         });
     } catch (error) {
@@ -67,44 +63,45 @@ const serveStaticFile = async (path) => {
 };
 
 async function Render(path) {
+    if (path === "/") {
+        path = "home";
+    }
     const f = Bun.file("src/pages/map/" + path + "/index.html");
     return new Response(await f.text(), {
         headers: {
-            'Content-Type': 'text/html'
-        }
+            "Content-Type": "text/html",
+        },
     });
 }
 
 function colorLog(msg) {
-    msg = msg ? msg.toString() : ''
-    if (msg.includes('.ico')) {
-        msg = msg + "\n"
-        console.log('\x1b[35m%s\x1b[0m', msg);
+    msg = msg ? msg.toString() : "";
+    if (msg.includes(".ico")) {
+        msg = msg + "\n";
+        console.log("\x1b[35m%s\x1b[0m", msg);
         return;
     }
 
-    newMsg = msg.split('.').pop();
+    newMsg = msg.split(".").pop();
 
     switch (newMsg) {
-        case 'css':
-            console.log('\x1b[36m%s\x1b[0m', msg);
+        case "css":
+            console.log("\x1b[36m%s\x1b[0m", msg);
             break;
-        case 'js':
-            console.log('\x1b[33m%s\x1b[0m', msg);
+        case "js":
+            console.log("\x1b[33m%s\x1b[0m", msg);
             break;
-        case 'html':
+        case "html":
             //red
-            console.log('\x1b[31m%s\x1b[0m', msg);
+            console.log("\x1b[31m%s\x1b[0m", msg);
             break;
         default:
-            console.log('\x1b[37m%s\x1b[0m', msg);
-
+            console.log("\x1b[37m%s\x1b[0m", msg);
     }
 }
-
 
 module.exports = {
     Render,
     serveStaticFile,
-    colorLog
+    colorLog,
 };
