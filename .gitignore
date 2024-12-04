@@ -175,3 +175,4 @@ dist
 .DS_Store
 
 Oracle_JDK-23.jdk
+/app/flutter
